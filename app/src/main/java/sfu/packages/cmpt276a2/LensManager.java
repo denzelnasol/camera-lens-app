@@ -8,7 +8,26 @@ import  java.util.List;
  * Stores collection of lenses and may add or retrieve a lens by index
  */
 public class LensManager implements Iterable<Lens>{
-    private List<Lens> lens = new ArrayList<>();
+
+    /*
+        Singleton Support
+     */
+    private static LensManager instance;
+    private LensManager() {
+        // Prevents instantiations
+    }
+    public static  LensManager getInstance() {
+        if (instance == null) {
+            instance = new LensManager();
+        }
+
+        return instance;
+    }
+
+    /*
+        Normal Object Code
+     */
+    public List<Lens> lens = new ArrayList<>();
 
     public void add(Lens newLens) {
         lens.add(newLens);

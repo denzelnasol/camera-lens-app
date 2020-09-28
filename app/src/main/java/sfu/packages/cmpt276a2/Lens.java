@@ -9,6 +9,7 @@ public class Lens {
     private int focalLength;
 
     public Lens(String make, double maximumAperture, int focalLength) {
+        super();
         this.make = make;
         this.maximumAperture = maximumAperture;
         this.focalLength = focalLength;
