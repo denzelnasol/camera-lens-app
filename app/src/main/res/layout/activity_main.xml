@@ -42,4 +42,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.369" />
+
+    <TextView
+        android:id="@+id/optionalFeaturesView"
+        android:layout_width="116dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="16dp"
+        android:text="Optional Features:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_view" />
+
+    <TextView
+        android:id="@+id/appBarBtnsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="1. App Bar Buttons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/optionalFeaturesView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
