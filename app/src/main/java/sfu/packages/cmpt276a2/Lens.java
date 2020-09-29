@@ -27,7 +27,7 @@ public class Lens {
         return maximumAperture;
     }
 
-    public void setMaximumAperture(float maximumAperture) {
+    public void setMaximumAperture(double maximumAperture) {
         this.maximumAperture = maximumAperture;
     }
 

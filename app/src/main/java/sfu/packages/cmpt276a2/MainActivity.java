@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private LensManager manager;
+    private ArrayAdapter<Lens> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,40 @@ public class MainActivity extends AppCompatActivity {
         populateListView();
         registerClickCallBack();
 
+        setupFAB();
+    }
+
+    private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view ->
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = LensActivity.makeIntent(MainActivity.this);
+                intent.putExtra("test", 0);
+                startActivityForResult(intent, 1);
+
+            }
+        });
+    }
+
+    // Gets called when activity started, finishes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_CANCELED) {
+            return;
+        }
+
+        switch (requestCode) {
+            case 1:
+                String make = data.getStringExtra(LensActivity.EXTRA_MAKE);
+                double aperture = data.getDoubleExtra(LensActivity.EXTRA_APERTURE, 0);
+                int focalLength = data.getIntExtra(LensActivity.EXTRA_FOCAL_LENGTH, 0);
+                manager.add(new Lens(make, aperture, focalLength));
+                adapter.notifyDataSetChanged();
+                break;
+        }
     }
 
     private void populateLensList() {
@@ -54,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        ArrayAdapter<Lens> adapter = new MyListAdapter();
+        adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.list_view);
         list.setAdapter(adapter);
     }
@@ -68,13 +100,11 @@ public class MainActivity extends AppCompatActivity {
                 String message = "You clicked position " + position + " which is lens make " + clickedLens.getMake();
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
 
-                // Launch lens activity
-                Intent intent = new Intent();
             }
         });
     }
 
-    private class MyListAdapter extends ArrayAdapter<Lens> {
+    public class MyListAdapter extends ArrayAdapter<Lens> {
         public MyListAdapter() {
             super(MainActivity.this, R.layout.lens_list, manager.lens);
         }

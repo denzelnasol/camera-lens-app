@@ -3,4 +3,10 @@
     <string name="select_text">Select a lens to use:</string>
     <string name="name">Name</string>
     <string name="make">Make</string>
+    <string name="cancel">Cancel</string>
+    <string name="ex_2_8_for_f2_8">ex: 2.8 for F2.8</string>
+    <string name="ex_cannon">ex: Canon</string>
+    <string name="focal_length_mm">Focal Length (mm)</string>
+    <string name="aperture">Aperture</string>
+    <string name="save">Save</string>
 </resources>
