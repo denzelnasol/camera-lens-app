@@ -1,34 +1,26 @@
 package sfu.packages.cmpt276a2;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.GenericArrayType;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int RESULT_CODE_CALCULATE_DOF = 30;
+    public static final String EXTRA_LENS_INDEX = "lens index";
+
     private LensManager manager;
     private ArrayAdapter<Lens> adapter;
 
@@ -40,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         manager = LensManager.getInstance();
         populateLensList();
         populateListView();
-        registerClickCallBack();
+        registerLensClickCallBack();
 
         setupFAB();
     }
@@ -91,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
-    private void registerClickCallBack() {
+    private void registerLensClickCallBack() {
         ListView list = (ListView) findViewById(R.id.list_view);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 String message = "You clicked position " + position + " which is lens make " + clickedLens.getMake();
                 Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
 
+                Intent intent = CalculateDepthOfFieldActivity.makeIntent(MainActivity.this);
+                intent.putExtra(EXTRA_LENS_INDEX, position);
+                startActivityForResult(intent, RESULT_CODE_CALCULATE_DOF);
             }
         });
     }

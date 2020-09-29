@@ -4,6 +4,193 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CalculateDepthOfField">
+    tools:context=".CalculateDepthOfFieldActivity">
+
+    <TextView
+        android:id="@+id/nearFocalDistanceText"
+        android:layout_width="159dp"
+        android:layout_height="23dp"
+        android:text="Enter all values"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/nearFocalDistanceView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/nearFocalDistanceView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/farFocalDistanceText"
+        android:layout_width="159dp"
+        android:layout_height="23dp"
+        android:text="Enter all values"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/farFocalDistanceView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/farFocalDistanceView" />
+
+    <TextView
+        android:id="@+id/hyperfocalDistanceText"
+        android:layout_width="159dp"
+        android:layout_height="23dp"
+        android:text="Enter all values"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/hyperfocalDistanceView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/hyperfocalDistanceView" />
+
+    <TextView
+        android:id="@+id/farFocalDistanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Far Focal Distance"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/nearFocalDistanceView" />
+
+    <TextView
+        android:id="@+id/depthOfFieldView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Depth of Field"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/farFocalDistanceView" />
+
+    <TextView
+        android:id="@+id/nearFocalDistanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Near Focal Distance"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hyperfocalDistanceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Hyperfocal Distance"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/depthOfFieldView" />
+
+    <EditText
+        android:id="@+id/editDistanceToSubjectText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="ex: 1.5 for 1.5m"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/distToSubjectView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/distToSubjectView" />
+
+    <TextView
+        android:id="@+id/photoDetailsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Photo Details With"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/hyperfocalDistanceView" />
+
+    <TextView
+        android:id="@+id/selectedApertureView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Selected Aperture"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/distToSubjectView" />
+
+    <EditText
+        android:id="@+id/editSelectedApertureText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="ex: 2.8 for F2.8"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/selectedApertureView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/selectedApertureView" />
+
+    <TextView
+        android:id="@+id/circleOfConfusionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Circle of Confusion [m]"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/photoDetailsView" />
+
+    <TextView
+        android:id="@+id/cameraInfoText"
+        android:layout_width="209dp"
+        android:layout_height="27dp"
+        android:text="Camera model goes here"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/photoDetailsView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/photoDetailsView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editCircleOfConfusionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="0.029"
+        app:layout_constraintBottom_toBottomOf="@+id/circleOfConfusionView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/circleOfConfusionView"
+        app:layout_constraintVertical_bias="0.461" />
+
+    <TextView
+        android:id="@+id/distToSubjectView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Distance to Subject [m]"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/circleOfConfusionView" />
+
+    <TextView
+        android:id="@+id/depthOfFieldText"
+        android:layout_width="159dp"
+        android:layout_height="23dp"
+        android:text="Enter all values"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/depthOfFieldView"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/depthOfFieldView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="232dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="196dp" />
+
+    <Button
+        android:id="@+id/calculateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Calculate"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/selectedApertureView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

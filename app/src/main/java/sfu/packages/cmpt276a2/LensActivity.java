@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 public class LensActivity extends AppCompatActivity {
 
-     String make;
-     double aperture;
-     int focalLength;
+     private String make;
+     private double aperture;
+     private int focalLength;
 
      EditText makeInput;
      EditText apertureInput;
@@ -24,12 +24,13 @@ public class LensActivity extends AppCompatActivity {
 
      public static final String EXTRA_MAKE = "the make";
      public static final String EXTRA_APERTURE = "the aperture";
-    public static final String EXTRA_FOCAL_LENGTH = "the focal length";
+     public static final String EXTRA_FOCAL_LENGTH = "the focal length";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lens2);
+        setTitle("Lens Details");
 
         setupCancelButton();
         setupSaveButton();
