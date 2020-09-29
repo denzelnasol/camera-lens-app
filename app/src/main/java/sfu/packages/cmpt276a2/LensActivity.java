@@ -1,12 +1,16 @@
 package sfu.packages.cmpt276a2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,29 +35,12 @@ public class LensActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lens2);
         setTitle("Lens Details");
-
-        setupCancelButton();
-        setupSaveButton();
     }
 
-    private void setupCancelButton() {
-        Button btn = (Button) findViewById(R.id.cancelButton);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                setResult(Activity.RESULT_CANCELED, intent);
-                finish();
-            }
-        });
-    }
-
-    private void setupSaveButton() {
-
-        Button btn = (Button) findViewById(R.id.saveButton);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.lens_save:
                 makeInput = (EditText) findViewById(R.id.editMakeText);
                 apertureInput = (EditText) findViewById(R.id.editApertureText);
                 focalLengthInput = (EditText) findViewById(R.id.editFocalLengthText);
@@ -69,9 +56,29 @@ public class LensActivity extends AppCompatActivity {
                 setResult(Activity.RESULT_OK, intent);
 
                 finish();
-            }
-        });
+                return true;
+
+            case R.id.lens_back:
+                Intent intentCancel = new Intent();
+                setResult(Activity.RESULT_CANCELED, intentCancel);
+                finish();
+                return true;
+            default:
+        }
+
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_lens_menu, menu);
+        return true;
+    }
+
+
+
+
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, LensActivity.class);
