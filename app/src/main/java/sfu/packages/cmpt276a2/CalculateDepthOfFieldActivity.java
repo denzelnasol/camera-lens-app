@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
+
 public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
     private int lensIndex;
     private LensManager manager = LensManager.getInstance();
-    private DepthOfFieldCalculator calculator;
     private Lens currentLens;
 
     double circleOfConfusion;
@@ -26,6 +27,11 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
     EditText circleOfConfusionInput;
     EditText distanceToSubjectInput;
     EditText selectedApertureInput;
+
+    double hyperfocalDistance;
+    double nearfocalPoint;
+    double farfocalPoint;
+    double depthOfField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,7 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
         TextView displayCamera = (TextView) findViewById(R.id.cameraInfoText);
         displayCamera.setText("" + currentLens.getMake() + " " + currentLens.getFocalLength() + "mm F" + currentLens.getMaximumAperture());
 
+        setupCalculateButton();
 
     }
 
@@ -49,15 +56,54 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DepthOfFieldCalculator calculator = new DepthOfFieldCalculator();
                 circleOfConfusionInput = (EditText) findViewById(R.id.editCircleOfConfusionText);
                 distanceToSubjectInput = (EditText) findViewById(R.id.editDistanceToSubjectText);
                 selectedApertureInput = (EditText) findViewById(R.id.editSelectedApertureText);
 
                 circleOfConfusion = Double.parseDouble(circleOfConfusionInput.getText().toString());
-                distanceToSubject
+                distanceToSubject = Double.parseDouble(distanceToSubjectInput.getText().toString());
+                selectedAperture = Double.parseDouble(selectedApertureInput.getText().toString());
+
+                if (selectedAperture < currentLens.getMaximumAperture()) {
+                    TextView hyperfocalDistanceText = (TextView) findViewById(R.id.hyperfocalDistanceText);
+                    hyperfocalDistanceText.setText("Invalid Aperture");
+
+                    TextView nearfocalPointText = (TextView) findViewById(R.id.nearFocalDistanceText);
+                    nearfocalPointText.setText("Invalid Aperture");
+
+                    TextView farfocalPointText = (TextView) findViewById(R.id.farFocalDistanceText);
+                    farfocalPointText.setText("Invalid Aperture");
+
+                    TextView depthOfFieldText = (TextView) findViewById(R.id.depthOfFieldText);
+                    depthOfFieldText.setText("Invalid Aperture");
+                }
+                else {
+                    hyperfocalDistance = calculator.hyperFocalDistance(selectedAperture, circleOfConfusion, currentLens.getFocalLength());
+                    TextView hyperfocalDistanceText = (TextView) findViewById(R.id.hyperfocalDistanceText);
+                    hyperfocalDistanceText.setText("" + formatDouble(hyperfocalDistance/1000) + "m");
+
+                    nearfocalPoint = calculator.nearFocalPoint(hyperfocalDistance, distanceToSubject, currentLens.getFocalLength());
+                    TextView nearfocalPointText = (TextView) findViewById(R.id.nearFocalDistanceText);
+                    nearfocalPointText.setText("" + formatDouble(nearfocalPoint) + "m");
+
+                    farfocalPoint = calculator.farFocalPoint(hyperfocalDistance, distanceToSubject, currentLens.getFocalLength());
+                    TextView farfocalPointText = (TextView) findViewById(R.id.farFocalDistanceText);
+                    farfocalPointText.setText("" + formatDouble(farfocalPoint) + "m");
+
+                    depthOfField = calculator.depthOfField(farfocalPoint, nearfocalPoint);
+                    TextView depthOfFieldText = (TextView) findViewById(R.id.depthOfFieldText);
+                    depthOfFieldText.setText("" + formatDouble(depthOfField) + "m");
+                }
             }
         });
 
+    }
+
+    double formatDouble(double distance)
+    {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.valueOf(df.format(distance));
     }
 
     public static Intent makeIntent(Context context) {
