@@ -23,9 +23,10 @@
         android:id="@+id/selectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
         android:text="@string/select_text"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,40 +34,38 @@
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_width="387dp"
-        android:layout_height="601dp"
+        android:layout_width="374dp"
+        android:layout_height="527dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="132dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="380dp"
+        android:layout_height="97dp"
+        android:text="@string/your_lens_list_is_currently_empty_to_add_more_lenses_click_the_add_button_on_the_bottom_right"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.369" />
+        app:layout_constraintVertical_bias="0.471" />
 
     <TextView
         android:id="@+id/optionalFeaturesView"
-        android:layout_width="116dp"
-        android:layout_height="23dp"
+        android:layout_width="277dp"
+        android:layout_height="105dp"
         android:layout_marginStart="16dp"
-        android:text="Optional Features:"
+        android:layout_marginTop="20dp"
+        android:text="Optional Features:\n1. App Bar Buttons\n3.Error Checking Inputs\n7. Empty State"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_view" />
 
-    <TextView
-        android:id="@+id/appBarBtnsView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="1. App Bar Buttons"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/optionalFeaturesView" />
-
-    <TextView
-        android:id="@+id/errorCheckingView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="3. Error Checking Inputs"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarBtnsView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

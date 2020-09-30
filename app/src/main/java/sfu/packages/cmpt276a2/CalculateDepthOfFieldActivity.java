@@ -22,6 +22,8 @@ import java.text.DecimalFormat;
 
 public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
+    public static final int RESULT_CODE_DELETE_LENS = 2;
+
     private int lensIndex;
     private LensManager manager = LensManager.getInstance();
     private Lens currentLens;
@@ -65,7 +67,9 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.lens_delete:
-                manager.lens.remove(lensIndex);
+                Intent intentDelete = new Intent();
+                intentDelete.putExtra("deleteIndex", lensIndex);
+                setResult(RESULT_CODE_DELETE_LENS, intentDelete);
                 finish();
                 return true;
             default:

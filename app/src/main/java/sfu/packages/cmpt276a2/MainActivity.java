@@ -12,19 +12,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int RESULT_CODE_CALCULATE_DOF = 30;
     public static final String EXTRA_LENS_INDEX = "lens index";
 
+    private String make;
+    private double aperture;
+    private int focalLength;
+
     private LensManager manager;
-    private ArrayAdapter<Lens> adapter;
+    private static ArrayAdapter<Lens> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
         manager = LensManager.getInstance();
 
-
         populateLensList();
         populateListView();
         registerLensClickCallBack();
-
         setupFAB();
     }
+
+   /* @Override
+    protected void onResume() {
+        super.onResume();
+        //adapter.addAll(manager.lens);
+        populateListView();
+    }*/
 
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -49,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = LensActivity.makeIntent(MainActivity.this);
                 intent.putExtra("test", 0);
                 startActivityForResult(intent, 1);
-
             }
         });
     }
@@ -62,16 +67,25 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_CANCELED) {
             return;
         }
-
-        switch (requestCode) {
-            case 1:
-                String make = data.getStringExtra(LensActivity.EXTRA_MAKE);
-                double aperture = data.getDoubleExtra(LensActivity.EXTRA_APERTURE, 0);
-                int focalLength = data.getIntExtra(LensActivity.EXTRA_FOCAL_LENGTH, 0);
-                manager.add(new Lens(make, aperture, focalLength));
-                //updateList();
-                this.adapter.notifyDataSetChanged();
-                break;
+        if (requestCode == 1) {
+            make = data.getStringExtra(LensActivity.EXTRA_MAKE);
+            aperture = data.getDoubleExtra(LensActivity.EXTRA_APERTURE, 0);
+            focalLength = data.getIntExtra(LensActivity.EXTRA_FOCAL_LENGTH, 0);
+            manager.add(new Lens(make, aperture, focalLength));
+            /*if (!manager.lens.isEmpty()) {
+                TextView emptyList = (TextView) findViewById(R.id.empty);
+                emptyList.setText("");
+            }*/
+            adapter.notifyDataSetChanged();
+        }
+        if (resultCode == CalculateDepthOfFieldActivity.RESULT_CODE_DELETE_LENS) {
+            int lensIndex = data.getIntExtra(EXTRA_LENS_INDEX, 0);
+            manager.lens.remove(lensIndex);
+            adapter.notifyDataSetChanged();
+            /*if (manager.lens.isEmpty()) {
+                TextView emptyList = (TextView) findViewById(R.id.empty);
+                emptyList.setText("Your lens list is currently Empty. To add more lenses, click the add button on the bottom right");
+            }*/
         }
     }
 
@@ -85,32 +99,17 @@ public class MainActivity extends AppCompatActivity {
     private void populateListView() {
         adapter = new MyListAdapter();
         ListView list = (ListView) findViewById(R.id.list_view);
+        list.setEmptyView(findViewById(R.id.empty));
         list.setAdapter(adapter);
     }
 
-/*
- private void updateList() {
-        List<Lens> newLens = manager.lens;
-        adapter.clear();
-        adapter.addAll(newLens);
-        populateListView();
-    }
- */
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
 
-    private void registerLensClickCallBack() {
+        View empty = findViewById(R.id.empty);
         ListView list = (ListView) findViewById(R.id.list_view);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Lens clickedLens = manager.getLens(position);
-                String message = "You clicked position " + position + " which is lens make " + clickedLens.getMake();
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-
-                Intent intent = CalculateDepthOfFieldActivity.makeIntent(MainActivity.this);
-                intent.putExtra(EXTRA_LENS_INDEX, position);
-                startActivityForResult(intent, RESULT_CODE_CALCULATE_DOF);
-            }
-        });
+        list.setEmptyView(empty);
     }
 
     public class MyListAdapter extends ArrayAdapter<Lens> {
@@ -120,17 +119,33 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            // Check that a view is given
             View itemView = convertView;
             if (itemView == null) {
                 itemView = getLayoutInflater().inflate(R.layout.lens_list, parent, false);
             }
 
+            // Find lens to use
             Lens currentLens = manager.getLens(position);
 
+            // Fill the text
             TextView makeText = (TextView) itemView.findViewById(R.id.text_lens);
             makeText.setText(currentLens.getMake() + " " + currentLens.getFocalLength() + "mm F" + currentLens.getMaximumAperture());
 
             return itemView;
         }
+    }
+    // Go to Calculate DOF Activity for the lens clicked
+    private void registerLensClickCallBack() {
+        ListView list = (ListView) findViewById(R.id.list_view);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                Lens clickedLens = manager.getLens(position);
+                Intent intent = CalculateDepthOfFieldActivity.makeIntent(MainActivity.this);
+                intent.putExtra(EXTRA_LENS_INDEX, position);
+                startActivityForResult(intent, RESULT_CODE_CALCULATE_DOF);
+            }
+        });
     }
 }
