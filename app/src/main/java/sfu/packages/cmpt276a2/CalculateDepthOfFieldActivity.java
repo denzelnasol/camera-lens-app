@@ -74,10 +74,11 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                depthOfField = calculator.depthOfField(farfocalPoint, nearfocalPoint);
-                TextView depthOfFieldText = (TextView) findViewById(R.id.depthOfFieldText);
-                depthOfFieldText.setText("" + formatDouble(depthOfField) + "m");
+                if (circleOfConfusionInput.getText().toString().equals("") && distanceToSubjectInput.getText().toString().equals("") && selectedApertureInput.getText().toString().equals("")) {
+                    depthOfField = calculator.depthOfField(farfocalPoint, nearfocalPoint);
+                    TextView depthOfFieldText = (TextView) findViewById(R.id.depthOfFieldText);
+                    depthOfFieldText.setText("" + formatDouble(depthOfField) + "m");
+                }
             }
         };
 

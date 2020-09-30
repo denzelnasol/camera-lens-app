@@ -63,7 +63,7 @@
         android:layout_width="277dp"
         android:layout_height="105dp"
         android:layout_marginStart="16dp"
-        android:text="Optional Features:\n1. App Bar Buttons\n2. Edit and Delete Lens (Edit doesn't work)\n3.Error Checking Inputs\n7. Empty State"
+        android:text="Optional Features:\n1. App Bar Buttons\n2. Edit and Delete Lens (Edit doesn't work)\n3. Error Checking Inputs\n4. Auto-Recalculate (in progress)\n 7. Empty State"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_view" />
