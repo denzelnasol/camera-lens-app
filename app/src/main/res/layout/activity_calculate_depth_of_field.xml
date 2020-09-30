@@ -152,7 +152,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="0.029"
         app:layout_constraintBottom_toBottomOf="@+id/circleOfConfusionView"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/circleOfConfusionView"

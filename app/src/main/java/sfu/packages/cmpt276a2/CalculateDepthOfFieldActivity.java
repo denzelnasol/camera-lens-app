@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
@@ -23,23 +26,26 @@ import java.text.DecimalFormat;
 public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
     public static final int RESULT_CODE_DELETE_LENS = 2;
+    //public static final String EXTRA_EDIT_INDEX = "edit index";
 
     private int lensIndex;
     private LensManager manager = LensManager.getInstance();
     private Lens currentLens;
 
-    double circleOfConfusion;
-    double distanceToSubject;
-    double selectedAperture;
+    private double circleOfConfusion;
+    private double distanceToSubject;
+    private double selectedAperture;
 
-    EditText circleOfConfusionInput;
-    EditText distanceToSubjectInput;
-    EditText selectedApertureInput;
+    private EditText circleOfConfusionInput;
+    private EditText distanceToSubjectInput;
+    private EditText selectedApertureInput;
 
-    double hyperfocalDistance;
-    double nearfocalPoint;
-    double farfocalPoint;
-    double depthOfField;
+    private double hyperfocalDistance;
+    private double nearfocalPoint;
+    private double farfocalPoint;
+    private double depthOfField;
+
+    private static final DepthOfFieldCalculator calculator = new DepthOfFieldCalculator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +61,89 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
         TextView displayCamera = (TextView) findViewById(R.id.cameraInfoText);
         displayCamera.setText("" + currentLens.getMake() + " " + currentLens.getFocalLength() + "mm F" + currentLens.getMaximumAperture());
 
+        circleOfConfusionInput =  (EditText) findViewById(R.id.editCircleOfConfusionText);
+        distanceToSubjectInput =  (EditText) findViewById(R.id.editCircleOfConfusionText);
+        selectedApertureInput =  (EditText) findViewById(R.id.editCircleOfConfusionText);
+
+        TextWatcher textWatcherCOC = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!selectedApertureInput.getText().toString().equals("")) {
+                    circleOfConfusion = Double.parseDouble(circleOfConfusionInput.getText().toString());
+                    selectedAperture = Double.parseDouble(selectedApertureInput.getText().toString());
+                    hyperfocalDistance = calculator.hyperFocalDistance(selectedAperture, circleOfConfusion, currentLens.getFocalLength());
+                    TextView hyperfocalDistanceText = (TextView) findViewById(R.id.hyperfocalDistanceText);
+                    hyperfocalDistanceText.setText("" + formatDouble(hyperfocalDistance / 1000) + "m");
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        TextWatcher textWatcherDistance = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!circleOfConfusionInput.getText().toString().equals("") && !selectedApertureInput.getText().toString().equals("") && distanceToSubjectInput.getText().toString().equals("")) {
+                    distanceToSubject = Double.parseDouble(distanceToSubjectInput.getText().toString());
+
+                    nearfocalPoint =  calculator.nearFocalPoint(hyperfocalDistance, distanceToSubject, currentLens.getFocalLength());
+                    TextView nearfocalPointText = (TextView) findViewById(R.id.nearFocalDistanceText);
+                    nearfocalPointText.setText("" + formatDouble(nearfocalPoint) + "m");
+
+                    farfocalPoint = calculator.farFocalPoint(hyperfocalDistance, distanceToSubject, currentLens.getFocalLength());
+                    TextView farfocalPointText = (TextView) findViewById(R.id.farFocalDistanceText);
+                    farfocalPointText.setText("" + formatDouble(farfocalPoint) + "m");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        TextWatcher textWatcherAperture = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!circleOfConfusionInput.getText().toString().equals("") && !selectedApertureInput.getText().toString().equals("") && distanceToSubjectInput.getText().toString().equals("")) {
+                    depthOfField = calculator.depthOfField(farfocalPoint, nearfocalPoint);
+                    TextView depthOfFieldText = (TextView) findViewById(R.id.depthOfFieldText);
+                    depthOfFieldText.setText("" + formatDouble(depthOfField) + "m");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+
+        circleOfConfusionInput.addTextChangedListener(textWatcherCOC);
+        distanceToSubjectInput.addTextChangedListener(textWatcherDistance);
+        selectedApertureInput.addTextChangedListener(textWatcherAperture);
+
         setupCalculateButton();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -72,6 +159,12 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
                 setResult(RESULT_CODE_DELETE_LENS, intentDelete);
                 finish();
                 return true;
+            /*case R.id.calculate_edit:
+                Intent intentEdit = LensActivity.makeIntent(CalculateDepthOfFieldActivity.this);
+                intentEdit.putExtra(EXTRA_EDIT_INDEX, lensIndex);
+                startActivityForResult(intentEdit, 0);
+                finish();
+                return true;*/
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -89,7 +182,6 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DepthOfFieldCalculator calculator = new DepthOfFieldCalculator();
                 circleOfConfusionInput = (EditText) findViewById(R.id.editCircleOfConfusionText);
                 distanceToSubjectInput = (EditText) findViewById(R.id.editDistanceToSubjectText);
                 selectedApertureInput = (EditText) findViewById(R.id.editSelectedApertureText);

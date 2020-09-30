@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,10 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int RESULT_CODE_CALCULATE_DOF = 30;
     public static final String EXTRA_LENS_INDEX = "lens index";
-
-    private String make;
-    private double aperture;
-    private int focalLength;
 
     private LensManager manager;
     private static ArrayAdapter<Lens> adapter;
@@ -40,20 +37,13 @@ public class MainActivity extends AppCompatActivity {
         setupFAB();
     }
 
-   /* @Override
-    protected void onResume() {
-        super.onResume();
-        //adapter.addAll(manager.lens);
-        populateListView();
-    }*/
-
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = LensActivity.makeIntent(MainActivity.this);
-                intent.putExtra("test", 0);
+                intent.putExtra("extra_FAB", 0);
                 startActivityForResult(intent, 1);
             }
         });
@@ -68,26 +58,15 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (requestCode == 1) {
-            make = data.getStringExtra(LensActivity.EXTRA_MAKE);
-            aperture = data.getDoubleExtra(LensActivity.EXTRA_APERTURE, 0);
-            focalLength = data.getIntExtra(LensActivity.EXTRA_FOCAL_LENGTH, 0);
-            manager.add(new Lens(make, aperture, focalLength));
-            /*if (!manager.lens.isEmpty()) {
-                TextView emptyList = (TextView) findViewById(R.id.empty);
-                emptyList.setText("");
-            }*/
             adapter.notifyDataSetChanged();
         }
         if (resultCode == CalculateDepthOfFieldActivity.RESULT_CODE_DELETE_LENS) {
             int lensIndex = data.getIntExtra(EXTRA_LENS_INDEX, 0);
             manager.lens.remove(lensIndex);
             adapter.notifyDataSetChanged();
-            /*if (manager.lens.isEmpty()) {
-                TextView emptyList = (TextView) findViewById(R.id.empty);
-                emptyList.setText("Your lens list is currently Empty. To add more lenses, click the add button on the bottom right");
-            }*/
         }
     }
+
 
     private void populateLensList() {
         manager.add(new Lens("Canon", 1.8, 50));
@@ -147,5 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, RESULT_CODE_CALCULATE_DOF);
             }
         });
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, CalculateDepthOfFieldActivity.class);
     }
 }

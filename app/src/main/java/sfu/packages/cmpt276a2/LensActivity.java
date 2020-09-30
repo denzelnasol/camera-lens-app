@@ -26,15 +26,14 @@ public class LensActivity extends AppCompatActivity {
      EditText apertureInput;
      EditText focalLengthInput;
 
-     public static final String EXTRA_MAKE = "the make";
-     public static final String EXTRA_APERTURE = "the aperture";
-     public static final String EXTRA_FOCAL_LENGTH = "the focal length";
+     LensManager manager = LensManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lens2);
         setTitle("Lens Details");
+
     }
 
     @Override
@@ -57,9 +56,7 @@ public class LensActivity extends AppCompatActivity {
                 }
                 else {
                     Intent intent = new Intent();
-                    intent.putExtra(EXTRA_MAKE, make);
-                    intent.putExtra(EXTRA_APERTURE, aperture);
-                    intent.putExtra(EXTRA_FOCAL_LENGTH, focalLength);
+                    manager.add(new Lens(make, aperture, focalLength));
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }

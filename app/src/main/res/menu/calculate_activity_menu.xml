@@ -7,6 +7,11 @@
         android:title="Delete"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/calculate_edit"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Edit"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/calculate_back"
         android:icon="@drawable/ic_baseline_arrow_back_24"
         android:title="Back"
