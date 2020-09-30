@@ -2,7 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/lens_back"
+    <item android:id="@+id/lens_delete"
+        android:icon="@drawable/ic_baseline_delete_24"
+        android:title="Delete"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/calculate_back"
         android:icon="@drawable/ic_baseline_arrow_back_24"
         android:title="Back"
         app:showAsAction="always"/>

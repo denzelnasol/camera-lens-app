@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -53,15 +54,18 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
         displayCamera.setText("" + currentLens.getMake() + " " + currentLens.getFocalLength() + "mm F" + currentLens.getMaximumAperture());
 
         setupCalculateButton();
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.lens_back:
+            case R.id.calculate_back:
                 Intent intentCancel = new Intent();
                 setResult(Activity.RESULT_CANCELED, intentCancel);
+                finish();
+                return true;
+            case R.id.lens_delete:
+                manager.lens.remove(lensIndex);
                 finish();
                 return true;
             default:
@@ -90,7 +94,10 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
                 distanceToSubject = Double.parseDouble(distanceToSubjectInput.getText().toString());
                 selectedAperture = Double.parseDouble(selectedApertureInput.getText().toString());
 
-                if (selectedAperture < currentLens.getMaximumAperture()) {
+                if (selectedAperture < 1.4) {
+                    Toast.makeText(CalculateDepthOfFieldActivity.this, "The selected aperture must be greater than or equal to 1.4", Toast.LENGTH_SHORT).show();
+                }
+                else if (selectedAperture < currentLens.getMaximumAperture()) {
                     TextView hyperfocalDistanceText = (TextView) findViewById(R.id.hyperfocalDistanceText);
                     hyperfocalDistanceText.setText("Invalid Aperture");
 
@@ -102,6 +109,12 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
                     TextView depthOfFieldText = (TextView) findViewById(R.id.depthOfFieldText);
                     depthOfFieldText.setText("Invalid Aperture");
+                }
+                else if (circleOfConfusion < 0) {
+                    Toast.makeText(CalculateDepthOfFieldActivity.this, "The circle of confusion can't be negative", Toast.LENGTH_SHORT).show();
+                }
+                else if (distanceToSubject < 0) {
+                    Toast.makeText(CalculateDepthOfFieldActivity.this, "The distance to the subject can't be negative", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     hyperfocalDistance = calculator.hyperFocalDistance(selectedAperture, circleOfConfusion, currentLens.getFocalLength());

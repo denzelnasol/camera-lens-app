@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int RESULT_CODE_CALCULATE_DOF = 30;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         manager = LensManager.getInstance();
+
+
         populateLensList();
         populateListView();
         registerLensClickCallBack();
@@ -65,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 double aperture = data.getDoubleExtra(LensActivity.EXTRA_APERTURE, 0);
                 int focalLength = data.getIntExtra(LensActivity.EXTRA_FOCAL_LENGTH, 0);
                 manager.add(new Lens(make, aperture, focalLength));
-                adapter.notifyDataSetChanged();
+                //updateList();
+                this.adapter.notifyDataSetChanged();
                 break;
         }
     }
@@ -82,6 +87,15 @@ public class MainActivity extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.list_view);
         list.setAdapter(adapter);
     }
+
+/*
+ private void updateList() {
+        List<Lens> newLens = manager.lens;
+        adapter.clear();
+        adapter.addAll(newLens);
+        populateListView();
+    }
+ */
 
     private void registerLensClickCallBack() {
         ListView list = (ListView) findViewById(R.id.list_view);

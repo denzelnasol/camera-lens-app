@@ -49,15 +49,21 @@ public class LensActivity extends AppCompatActivity {
                 aperture = Double.parseDouble(apertureInput.getText().toString());
                 focalLength = Integer.parseInt(focalLengthInput.getText().toString());
 
-                Intent intent = new Intent();
-                intent.putExtra(EXTRA_MAKE, make);
-                intent.putExtra(EXTRA_APERTURE, aperture);
-                intent.putExtra(EXTRA_FOCAL_LENGTH, focalLength);
-                setResult(Activity.RESULT_OK, intent);
-
-                finish();
+                if (aperture < 1.4) {
+                    Toast.makeText(LensActivity.this, "The selected aperture must be greater than or equal to 1.4", Toast.LENGTH_SHORT).show();
+                }
+                else if (focalLength < 0) {
+                    Toast.makeText(LensActivity.this, "The selected focal length must be greater than 0", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent();
+                    intent.putExtra(EXTRA_MAKE, make);
+                    intent.putExtra(EXTRA_APERTURE, aperture);
+                    intent.putExtra(EXTRA_FOCAL_LENGTH, focalLength);
+                    setResult(Activity.RESULT_OK, intent);
+                    finish();
+                }
                 return true;
-
             case R.id.lens_back:
                 Intent intentCancel = new Intent();
                 setResult(Activity.RESULT_CANCELED, intentCancel);

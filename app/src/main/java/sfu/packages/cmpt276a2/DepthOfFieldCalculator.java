@@ -16,9 +16,6 @@ public class DepthOfFieldCalculator {
 
     public double farFocalPoint(double hyperFocalPoint, double distance, double focalLength) {
         double result = ((convertToMM(distance) * (hyperFocalPoint - focalLength)) / (hyperFocalPoint - convertToMM(distance))) / 1000;
-        if (result < 0 || result > hyperFocalPoint) {
-            return Double.POSITIVE_INFINITY;
-        }
         return result;
     }
 
