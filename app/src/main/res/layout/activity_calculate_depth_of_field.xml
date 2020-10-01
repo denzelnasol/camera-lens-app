@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="ex: 1.5 for 1.5m"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/distToSubjectView"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/distToSubjectView" />
@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="ex: 2.8 for F2.8"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/selectedApertureView"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/selectedApertureView" />
@@ -151,8 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="0.029"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/circleOfConfusionView"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/circleOfConfusionView"
@@ -191,18 +190,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="196dp" />
-
-    <Button
-        android:id="@+id/calculateBtn"
-        android:layout_width="126dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="48dp"
-        android:text="Calculate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.288"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/editSelectedApertureText" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

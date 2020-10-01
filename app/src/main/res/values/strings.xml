@@ -10,4 +10,5 @@
     <string name="aperture">Aperture</string>
     <string name="save">Save</string>
     <string name="your_lens_list_is_currently_empty_to_add_more_lenses_click_the_add_button_on_the_bottom_right">Your lens list is currently Empty. To add more lenses, click the add button on the bottom right</string>
+    <string name="invalid_aperture">Invalid Aperture</string>
 </resources>

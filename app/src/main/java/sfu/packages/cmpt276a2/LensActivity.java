@@ -18,15 +18,15 @@ import android.widget.Toast;
 
 public class LensActivity extends AppCompatActivity {
 
-     private String make;
-     private double aperture;
-     private int focalLength;
+    private String make;
+    private double aperture;
+    private int focalLength;
 
-     EditText makeInput;
-     EditText apertureInput;
-     EditText focalLengthInput;
+    EditText makeInput;
+    EditText apertureInput;
+    EditText focalLengthInput;
 
-     LensManager manager = LensManager.getInstance();
+    LensManager manager = LensManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,10 @@ public class LensActivity extends AppCompatActivity {
                 aperture = Double.parseDouble(apertureInput.getText().toString());
                 focalLength = Integer.parseInt(focalLengthInput.getText().toString());
 
-                if (aperture < 1.4) {
+                if (make.length() < 0) {
+                    Toast.makeText(LensActivity.this, "There must be a make", Toast.LENGTH_SHORT).show();
+                }
+                else if (aperture < 1.4) {
                     Toast.makeText(LensActivity.this, "The selected aperture must be greater than or equal to 1.4", Toast.LENGTH_SHORT).show();
                 }
                 else if (focalLength < 0) {

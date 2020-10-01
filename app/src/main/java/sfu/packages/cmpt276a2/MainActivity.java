@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -61,12 +62,17 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
         if (resultCode == CalculateDepthOfFieldActivity.RESULT_CODE_DELETE_LENS) {
-            int lensIndex = data.getIntExtra(EXTRA_LENS_INDEX, 0);
+            int lensIndex = data.getIntExtra(CalculateDepthOfFieldActivity.EXTRA_DELETE_INDEX, 0);
             manager.lens.remove(lensIndex);
             adapter.notifyDataSetChanged();
         }
+        /*if (resultCode == CalculateDepthOfFieldActivity.RESULT_CODE_EDIT_LENS) {
+            int lensIndex = data.getIntExtra(CalculateDepthOfFieldActivity.EXTRA_EDIT_INDEX, 0);
+            Toast.makeText(MainActivity.this, "" + lensIndex, Toast.LENGTH_SHORT).show();
+            manager.lens.remove(lensIndex);
+            adapter.notifyDataSetChanged();
+        }*/
     }
-
 
     private void populateLensList() {
         manager.add(new Lens("Canon", 1.8, 50));
@@ -120,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Lens clickedLens = manager.getLens(position);
                 Intent intent = CalculateDepthOfFieldActivity.makeIntent(MainActivity.this);
                 intent.putExtra(EXTRA_LENS_INDEX, position);
                 startActivityForResult(intent, RESULT_CODE_CALCULATE_DOF);
