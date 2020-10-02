@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         manager = LensManager.getInstance();
 
-        populateLensList();
+        if (manager.size() == 0) {
+            populateLensList();
+        }
         populateListView();
         registerLensClickCallBack();
         setupFAB();
     }
+    
 
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -66,12 +73,6 @@ public class MainActivity extends AppCompatActivity {
             manager.lens.remove(lensIndex);
             adapter.notifyDataSetChanged();
         }
-        /*if (resultCode == CalculateDepthOfFieldActivity.RESULT_CODE_EDIT_LENS) {
-            int lensIndex = data.getIntExtra(CalculateDepthOfFieldActivity.EXTRA_EDIT_INDEX, 0);
-            Toast.makeText(MainActivity.this, "" + lensIndex, Toast.LENGTH_SHORT).show();
-            manager.lens.remove(lensIndex);
-            adapter.notifyDataSetChanged();
-        }*/
     }
 
     private void populateLensList() {
@@ -131,9 +132,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, RESULT_CODE_CALCULATE_DOF);
             }
         });
-    }
-
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, CalculateDepthOfFieldActivity.class);
     }
 }

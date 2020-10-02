@@ -28,8 +28,6 @@ import java.text.DecimalFormat;
 public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
     public static final int RESULT_CODE_DELETE_LENS = 2;
-    public static final int RESULT_CODE_EDIT_LENS = 3;
-    public static final String EXTRA_EDIT_INDEX = "editIndex";
     public static final String EXTRA_DELETE_INDEX = "deleteIndex";
 
     private int lensIndex;
@@ -159,36 +157,10 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
                 setResult(RESULT_CODE_DELETE_LENS, intentDelete);
                 finish();
                 return true;
-            /*case R.id.calculate_edit:
-                Intent intentEdit = LensActivity.makeIntent(CalculateDepthOfFieldActivity.this);
-                intentEdit.putExtra(EXTRA_EDIT_INDEX, lensIndex);
-                Toast.makeText(CalculateDepthOfFieldActivity.this, "" + lensIndex, Toast.LENGTH_SHORT).show();
-                startActivityForResult(intentEdit, 11);
-                return true;*/
             default:
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /*// Gets called when activity started, finishes
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 11) {
-            Toast.makeText(CalculateDepthOfFieldActivity.this, "TEST", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent();
-            setResult(RESULT_CODE_EDIT_LENS, intent);
-            finish();
-            return;
-        }
-        if (requestCode == Activity.RESULT_CANCELED) {
-            Intent intent = new Intent();
-            setResult(Activity.RESULT_CANCELED, intent);
-            finish();
-        }
-
-    }*/
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
