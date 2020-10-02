@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         registerLensClickCallBack();
         setupFAB();
     }
-    
+
 
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -76,17 +77,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateLensList() {
-        manager.add(new Lens("Canon", 1.8, 50));
-        manager.add(new Lens("Tamron", 2.8, 90));
-        manager.add(new Lens("Sigma", 2.8, 200));
-        manager.add(new Lens("Nikon", 4, 200));
-    }
-
-    private void populateListView() {
-        adapter = new MyListAdapter();
-        ListView list = (ListView) findViewById(R.id.list_view);
-        list.setEmptyView(findViewById(R.id.empty));
-        list.setAdapter(adapter);
+        manager.add(new Lens("Canon", 1.8, 50, R.drawable.lensimage1));
+        manager.add(new Lens("Tamron", 2.8, 90, R.drawable.lensimage2));
+        manager.add(new Lens("Sigma", 2.8, 200, R.drawable.lensimage3));
+        manager.add(new Lens("Nikon", 4, 200, R.drawable.lensimage4));
     }
 
     @Override
@@ -96,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
         View empty = findViewById(R.id.empty);
         ListView list = (ListView) findViewById(R.id.list_view);
         list.setEmptyView(empty);
+    }
+
+    private void populateListView() {
+        adapter = new MyListAdapter();
+        ListView list = (ListView) findViewById(R.id.list_view);
+        list.setEmptyView(findViewById(R.id.empty));
+        list.setAdapter(adapter);
     }
 
     public class MyListAdapter extends ArrayAdapter<Lens> {
@@ -117,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
             // Fill the text
             TextView makeText = (TextView) itemView.findViewById(R.id.text_lens);
             makeText.setText(currentLens.getMake() + " " + currentLens.getFocalLength() + "mm F" + currentLens.getMaximumAperture());
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.image_lens);
+            imageView.setImageResource(currentLens.getIconID());
 
             return itemView;
         }

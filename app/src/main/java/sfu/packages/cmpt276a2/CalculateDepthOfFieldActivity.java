@@ -92,10 +92,9 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
                         distanceToSubject = Double.parseDouble(distanceToSubjectInput.getText().toString());
                         selectedAperture = Double.parseDouble(selectedApertureInput.getText().toString());
 
-                        if (selectedAperture < 1.4) {
-                            Toast.makeText(CalculateDepthOfFieldActivity.this, "The selected aperture must be greater than or equal to 1.4", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (selectedAperture < currentLens.getMaximumAperture()) {
+                        if (selectedAperture < currentLens.getMaximumAperture()) {
+                            Toast.makeText(CalculateDepthOfFieldActivity.this, "The selected aperture must be greater than or equal to the lens' maximum aperture", Toast.LENGTH_SHORT).show();
+
                             TextView hyperfocalDistanceText = (TextView) findViewById(R.id.hyperfocalDistanceText);
                             hyperfocalDistanceText.setText("Invalid Aperture");
 
@@ -115,7 +114,6 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
                             Toast.makeText(CalculateDepthOfFieldActivity.this, "The distance to the subject can't be negative", Toast.LENGTH_SHORT).show();
                         }
                         else {
-
                             hyperfocalDistance = calculator.hyperFocalDistance(selectedAperture, circleOfConfusion, currentLens.getFocalLength());
                             hyperfocalDistanceText.setText("" + formatDouble(hyperfocalDistance / 1000) + "m");
 

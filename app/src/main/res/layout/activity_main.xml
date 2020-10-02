@@ -60,10 +60,11 @@
 
     <TextView
         android:id="@+id/optionalFeaturesView"
-        android:layout_width="277dp"
-        android:layout_height="105dp"
+        android:layout_width="275dp"
+        android:layout_height="118dp"
         android:layout_marginStart="16dp"
-        android:text="Optional Features:\n1. App Bar Buttons\n2. Edit and Delete Lens (Edit doesn't work)\n3. Error Checking Inputs\n4. Auto-Recalculate\n7. Empty State"
+        android:layout_marginTop="8dp"
+        android:text="Optional Features:\n1. App Bar Buttons\n2. Edit and Delete Lens (Edit doesn't work)\n3. Error Checking Inputs\n4. Auto-Recalculate\n6. Lens Icons\n7. Empty State"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_view" />

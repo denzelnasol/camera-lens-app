@@ -6,6 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".LensActivity">
 
+    <ImageView
+        android:id="@+id/imageLens5"
+        android:layout_width="103dp"
+        android:layout_height="90dp"
+        android:onClick="setImage5"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/imageLens4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageLens4"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/lensimage5" />
+
+    <ImageView
+        android:id="@+id/imageLens1"
+        android:layout_width="103dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="36dp"
+        android:onClick="setImage1"
+        android:src="@drawable/lensimage1"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintEnd_toStartOf="@+id/imageLens2"
+        app:layout_constraintTop_toBottomOf="@+id/imageTextView" />
+
+    <ImageView
+        android:id="@+id/imageLens3"
+        android:layout_width="103dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="24dp"
+        android:onClick="setImage3"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/imageLens2"
+        app:layout_constraintStart_toEndOf="@+id/imageLens2"
+        app:layout_constraintTop_toTopOf="@+id/imageLens2"
+        app:srcCompat="@drawable/lensimage3" />
+
     <EditText
         android:id="@+id/editApertureText"
         android:layout_width="390dp"
@@ -15,7 +52,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/ex_2_8_for_f2_8"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +67,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="ex: 200 for 200mm"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,5 +120,53 @@
         app:layout_constraintHorizontal_bias="0.048"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editFocalLengthText" />
+
+    <ImageView
+        android:id="@+id/imageLens4"
+        android:layout_width="102dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="36dp"
+        android:onClick="setImage4"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintEnd_toStartOf="@+id/imageLens5"
+        app:layout_constraintTop_toBottomOf="@+id/imageLens1"
+        app:srcCompat="@drawable/lensimage4" />
+
+    <ImageView
+        android:id="@+id/imageLens2"
+        android:layout_width="103dp"
+        android:layout_height="90dp"
+        android:onClick="setImage2"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintBottom_toBottomOf="@+id/imageLens1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageLens1"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/lensimage2" />
+
+    <TextView
+        android:id="@+id/imageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Choose an Image:"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editApertureText" />
+
+    <View
+        android:layout_width="414dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="#6F7776"
+        app:layout_constraintBottom_toTopOf="@+id/imageTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editApertureText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
