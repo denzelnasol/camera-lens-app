@@ -24,6 +24,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
@@ -125,6 +126,12 @@ public class CalculateDepthOfFieldActivity extends AppCompatActivity {
 
                             depthOfField = calculator.depthOfField(farfocalPoint, nearfocalPoint);
                             depthOfFieldText.setText("" + formatDouble(depthOfField) + "m");
+
+                            if (farfocalPoint < 0) {
+                                farfocalPointText.setText("Infinity");
+                                depthOfFieldText.setText("Infinity");
+                            }
+
                         }
                     }
                     catch(NumberFormatException e) {
