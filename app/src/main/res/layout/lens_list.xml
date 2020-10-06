@@ -6,6 +6,13 @@
     android:layout_height="match_parent">
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="3dp" />
+
     <TextView
         android:id="@+id/text_lens"
         android:layout_width="216dp"
@@ -18,19 +25,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_lens"
         app:layout_constraintTop_toTopOf="@+id/image_lens"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintVertical_bias="0.416" />
 
     <ImageView
         android:id="@+id/image_lens"
         android:layout_width="82dp"
         android:layout_height="65dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
         app:layout_constraintEnd_toStartOf="@+id/text_lens"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:layout_constraintVertical_bias="0.444"
         app:srcCompat="@drawable/lensimage5" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -38,6 +44,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="97dp" />
+        app:layout_constraintGuide_begin="88dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
